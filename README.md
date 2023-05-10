@@ -19,4 +19,4 @@ específico e que possa ser facilmente copiada para um editor de texto / email.
 
 Info:
 - searchResultsShell div modification (I'm preparing this div to receive inputs)
-- Classes that store info ( jobTitle hidden-phone / jobLocation )
+- Classes that store info ( jobTitle hidden-phone / jobLocation ).
