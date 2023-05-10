@@ -1,6 +1,6 @@
 # Projeto-Final - Automatização de Newsletter - SAP
 
-Este projeto tem como objetivo automatizar o processo de criação da Newsletter de Recrutamento mensal do Departamento de Recursos Humanos da SAP Portugal. Atualmente, a newsletter é construída manualmente, tornando o processo moroso e sujeito a erros. A ideia é criar uma aplicação que possa extrair automaticamente as informações das posições disponíveis e formatá-las em uma Newsletter pronta para ser enviada.
+Este projeto tem como objetivo automatizar o processo de criação da Newsletter de Recrutamento mensal do Departamento de Recursos Humanos da SAP Portugal. Atualmente, a newsletter é construída manualmente, tornando o processo moroso e sujeito a erros. A ideia é criar uma aplicação que possa extrair automaticamente as informações das posições disponíveis e formatá-las em uma Newsletter já pronta para ser enviada.
 
 ## Funcionalidades
 
@@ -9,7 +9,7 @@ Este projeto tem como objetivo automatizar o processo de criação da Newsletter
 - Opcional: criar a aplicação como extensão no Chrome.
 - Opcional: fazer parsing da página pública com as posições externas e adicionar essa informação à Newsletter.
 
-## Como utilizar
+## Utilização
 
 1. Clone este repositório na sua máquina.
 2. "xxx"
