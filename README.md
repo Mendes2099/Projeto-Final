@@ -8,9 +8,12 @@ Este é um processo que, sendo manual, se torna moroso, pelo que o objetivo dest
 -Algumas tarefas propostas:
 
 • Criação de uma aplicação que faça parsing de uma página interna com as posições atualmente disponíveis.
+
 • Criação do output da Newsletter (provavelmente em HTML) com essa informação formatada dentro de um template
 específico e que possa ser facilmente copiada para um editor de texto / email.
+
 • Opcional: criação da aplicação como extensão no Chrome.
+
 • Opcional: fazer parsing da página pública com as posições externas e adicionar essa informação à Newsletter.
 
 
