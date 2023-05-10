@@ -5,7 +5,7 @@ Atualmente, essa Newsletter é construída manualmente. Assim, no corpo de texto
 posteriormente, identificam-se as várias posições existentes, colocando-se o link para as posições de forma manual. 
 Este é um processo que, sendo manual, se torna moroso, pelo que o objetivo deste projeto é automatizá-lo (ou seja,construir uma aplicação que permita “passar” automaticamente os links das posições para a Newsletter).
 
--Algumas tarefas propostas:
+-----Algumas tarefas propostas:-----
 
 • Criação de uma aplicação que faça parsing de uma página interna com as posições atualmente disponíveis.
 
