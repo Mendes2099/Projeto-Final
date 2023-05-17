@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 let scrapeLinks = document.getElementById('scrapeLinks');
 
 scrapeLinks.addEventListener("click", async () => {
@@ -34,19 +36,27 @@ function scrapeLinksFromPage() {
 // Function to create an EML file with the job links
 function createEML(jobLinks) {
   const domain = 'jobs.sap.com';
+  const htmlTemplatePath = './template.html'
+
+  const templateContent = fs.readFileSync(htmlTemplatePath, 'utf8');
+
+
   let emailBody = jobLinks.map(link => `<a href="https://${domain}${link}">https://${domain}${link}</a>`).join('<br>');
+  const renderedTemplate = templateContent.replace('{{jobLinks}}', emailBody);
+
 
   let emlData = `From: me@example.com
-To: you@example.com
-Subject: Job Links
-Content-Type: text/html; charset=UTF-8
+  To: you@example.com
+  Subject: Job Links
+  Content-Type: text/html; charset=UTF-8
 
-<html>
-<body>
-<p>Job Links:</p>
-${emailBody}
-</body>
-</html>`;
+  <html>
+  <body>
+  <p>Job Links:</p>
+  ${emailBody}
+  ${renderedTemplate}
+  </body>
+  </html>`;
 
   return emlData;
 }
