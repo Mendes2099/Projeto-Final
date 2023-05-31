@@ -1,5 +1,3 @@
-const fs = require('fs');
-
 let scrapeLinks = document.getElementById('scrapeLinks');
 
 scrapeLinks.addEventListener("click", async () => {
@@ -15,11 +13,14 @@ scrapeLinks.addEventListener("click", async () => {
     if (results && results.length > 0 && results[0].result) {
       const jobLinks = results[0].result;
 
-      // Create the EML file with the job links
-      const emlData = createEML(jobLinks);
+      // Read the template links asynchronously
+      readTemplateLinks((templateLinks) => {
+        // Create the EML file with the job links
+        const emlData = createEML(jobLinks, templateLinks);
 
-      // Download the EML file
-      downloadFile(emlData, 'job-links.eml');
+        // Download the EML file
+        downloadFile(emlData, 'job-links.eml');
+      });
     }
   });
 });
@@ -27,23 +28,33 @@ scrapeLinks.addEventListener("click", async () => {
 // Function to scrape links from the web page
 function scrapeLinksFromPage() {
   const linkRegEx = /href="(\/job\/[\w-]+\/\d+\/)"/g;
-  /* const domain = 'jobs.sap.com'; */
   const links = Array.from(document.body.innerHTML.matchAll(linkRegEx)).map(match => `${match[1]}`);
-  
+
   return links;
 }
 
-// Function to create an EML file with the job links
-function createEML(jobLinks) {
+// Function to read the links from the template file asynchronously
+function readTemplateLinks(callback) {
+  // Use fetch or XMLHttpRequest to retrieve the template content asynchronously
+  fetch('./template.html')
+    .then(response => response.text())
+    .then(templateContent => {
+      const linkRegEx = /href="([^"]+)"/g;
+      const links = Array.from(templateContent.matchAll(linkRegEx)).map(match => `${match[1]}`);
+      callback(links);
+    })
+    .catch(error => {
+      console.error('Error reading template links:', error);
+      callback([]);
+    });
+}
+
+// Function to create an EML file with the job links and template links
+function createEML(jobLinks, templateLinks) {
   const domain = 'jobs.sap.com';
-  const htmlTemplatePath = './template.html'
-
-  const templateContent = fs.readFileSync(htmlTemplatePath, 'utf8');
-
 
   let emailBody = jobLinks.map(link => `<a href="https://${domain}${link}">https://${domain}${link}</a>`).join('<br>');
-  const renderedTemplate = templateContent.replace('{{jobLinks}}', emailBody);
-
+  const renderedTemplate = templateLinks.map(link => `<a href="${link}">${link}</a>`).join('<br>');
 
   let emlData = `From: me@example.com
   To: you@example.com
