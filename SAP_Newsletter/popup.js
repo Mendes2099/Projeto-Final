@@ -1,5 +1,3 @@
-const fs = require('fs');
-
 let scrapeLinks = document.getElementById('scrapeLinks');
 
 scrapeLinks.addEventListener("click", async () => {
@@ -29,49 +27,46 @@ function scrapeLinksFromPage() {
   const linkRegEx = /href="(\/job\/[\w-]+\/\d+\/)"/g;
   /* const domain = 'jobs.sap.com'; */
   const links = Array.from(document.body.innerHTML.matchAll(linkRegEx)).map(match => `${match[1]}`);
-  
+
   return links;
 }
 
-// Function to create an EML file with the job links
+// Function to create an EML file with the job links and HTML template
 function createEML(jobLinks) {
   const domain = 'jobs.sap.com';
-  const htmlTemplatePath = './template.html'
 
-  const templateContent = fs.readFileSync(htmlTemplatePath, 'utf8');
+  // Replace placeholders in the template with the job links
+  const emailBody = jobLinks.map(link => {
+    const jobLinkHtml = `<a href="https://${domain}${link}">Internal link</a>`;
+    return jobLinkHtml;
+  }).join('<br>');
 
+  const htmlTemplate = `
+    <html>
+    <body>
+      <p>Job Links:</p>
+      ${emailBody}
+    </body>
+    </html>
+  `;
 
-  let emailBody = jobLinks.map(link => `<a href="https://${domain}${link}">https://${domain}${link}</a>`).join('<br>');
-  const renderedTemplate = templateContent.replace('{{jobLinks}}', emailBody);
+  const emlData = `From: me@example.com
+To: you@example.com
+Subject: Job Links
+Content-Type: text/html; charset=UTF-8
 
-
-  let emlData = `From: me@example.com
-  To: you@example.com
-  Subject: Job Links
-  Content-Type: text/html; charset=UTF-8
-
-  <html>
-  <body>
-  <p>Job Links:</p>
-  ${emailBody}
-  ${renderedTemplate}
-  </body>
-  </html>`;
+${htmlTemplate}`;
 
   return emlData;
 }
 
 // Function to download a file
 function downloadFile(data, filename) {
-  const blob = new Blob([data], { type: 'text/html; charset=UTF-8' });
-  const url = URL.createObjectURL(blob);
+  const blob = new Blob([data], { type: 'text/plain' });
 
   // Create a link and click it to initiate the download
   let link = document.createElement('a');
-  link.href = url;
+  link.href = URL.createObjectURL(blob);
   link.download = filename;
   link.click();
-
-  // Clean up the URL object
-  URL.revokeObjectURL(url);
 }

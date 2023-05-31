@@ -1,0 +1,21 @@
+1) Criar um ficheiro manifest.json. Este ficheiro vai ter informação sobre a extensão, como o nome, versão e permissões.
+
+2) Criar um ficheiro content script. Este ficheiro é um ficheiro JS que interage com a DOM da página e faz o scrape das ofertas de emprego directamente do site da SAP.
+Através da API da DOM e expressões em JS conseguimos extrair a informação que pretendemos.
+
+3) Criar um background script. É um ficheiro JS que corre no background da extensão e executa funções tais como: download do ficheiro EML e envio de emails. Faz o toggle de escolha de aplicação a executar quando queremos ler o ficheiro descarregado?
+
+4) Definir o template HTML que a SAP quer utilizar. Numa primeira instância, iremos usar as ofertas de jobs externa (é a única que temos acesso for now), criar uma estrutura de dados e guardar essas ofertas, para quando usarmos as ofertas de jobs internas (só com acesso SAP), poder comparar, filtrar e só apresentar as ofertas que não sejam repetidas.
+
+------------------------------------------------------------------------------------------------------
+
+Extras:
+
+- Ao togglar a extensão poder colocar qualquer link, escolher um template à minha escolha
+- Toggle para poder escolher a aplicação de leitura de email
+- Recolha de dados estatisticos para se ficar a conhecer que ofertas de emprego foram enviadas
+- API descarregar newsletter se necessário 
+
+
+
+ 
