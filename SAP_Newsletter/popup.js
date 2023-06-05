@@ -4,42 +4,52 @@ scrapeLinks.addEventListener("click", async () => {
   // Get the current active tab
   let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
 
-  // Execute a script to scrape the job links from the page
+  // Execute a script to scrape the job links, titles, and categories from the page
   chrome.scripting.executeScript({
     target: { tabId: tab.id },
     func: scrapeLinksFromPage,
   }, (results) => {
     // Handle the results returned by the content script
     if (results && results.length > 0 && results[0].result) {
-      const jobLinks = results[0].result;
+      const { jobLinks, jobTitles, jobLocations } = results[0].result;
 
-      // Create the EML file with the job links
-      const emlData = createEML(jobLinks);
+      // Create the EML file with the job links, titles, and categories
+      const emlData = createEML(jobLinks, jobTitles, jobLocations);
 
       // Download the EML file
-      downloadFile(emlData, 'job-links.eml');
+      downloadFile(emlData, 'SAP_Newsletter.eml');
     }
   });
 });
 
-// Function to scrape links from the web page
+// Function to scrape links, titles, and categories from the web page
 function scrapeLinksFromPage() {
   const linkRegEx = /href="(\/job\/[\w-]+\/\d+\/)"/g;
-  /* const domain = 'jobs.sap.com'; */
+  const jobTitleElements = document.querySelectorAll('.colTitle');
+  const jobCategoryElements = document.querySelectorAll('.colLocation');
   const links = Array.from(document.body.innerHTML.matchAll(linkRegEx)).map(match => `${match[1]}`);
+  const jobTitles = Array.from(jobTitleElements).map(element => element.innerText);
+  const jobLocations = Array.from(jobCategoryElements).map(element => element.innerText);
+  /* const domain = 'jobs.sap.com'; */
 
-  return links;
+  return { jobLinks: links, jobTitles, jobLocations };
 }
 
-// Function to create an EML file with the job links and HTML template
-function createEML(jobLinks) {
+// Function to create an EML file with the job links, titles, and categories
+function createEML(jobLinks, jobTitles, jobLocations) {
   const domain = 'jobs.sap.com';
 
-  // Replace placeholders in the template with the job links
-  const emailBody = jobLinks.map(link => {
-    const jobLinkHtml = `<a href="https://${domain}${link}">Internal link</a>`;
+  // Replace placeholders in the template with the job links, titles, and categories
+  const emailBody = jobLinks.map((link, index) => {
+    const jobLinkHtml = `
+      <p>
+        <a href="https://${domain}${link}">Internal link</a><br>
+        <span>${jobTitles[index]}</span><br>
+        <span>${jobLocations[index]}</span>
+      </p>
+    `;
     return jobLinkHtml;
-  }).join('<br>');
+  }).join('');
 
   const htmlTemplate = `
     <html>
