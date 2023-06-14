@@ -86,3 +86,50 @@ function downloadFile(data, filename) {
   // Clean up the URL object
   URL.revokeObjectURL(url);
 }
+
+/!-------------------------------------------------------------------
+
+// Function to create a PDF file with the job links, titles, and categories
+function createPDF(jobLinks, jobTitles, jobLocations) {
+  const domain = 'jobs.sap.com';
+
+  const pdfBody = jobLinks.map((link, index) => {
+    const jobLinkHtml = `
+      <p>
+        <a href="https://${domain}${link}">Internal link</a><br>
+        <span>${jobTitles[index]}</span><br>
+        <span>${jobLocations[index]}</span>
+      </p>
+    `;
+    return jobLinkHtml;
+  }).join('');
+
+  const htmlTemplate = `
+    <html>
+    <body>
+      <p>Job Links:</p>
+      ${pdfBody}
+    </body>
+    </html>
+  `;
+
+  // Create a hidden div element to hold the HTML content
+  const container = document.createElement('div');
+  container.innerHTML = htmlTemplate;
+
+  // Generate the PDF from the HTML content
+  const pdfData = container.innerHTML; // Replace this with your preferred method of generating a PDF from HTML
+
+  return pdfData;
+}
+
+// Function to download a file
+function downloadFile(data, filename, mimeType) {
+  const blob = new Blob([data], { type: mimeType });
+
+  // Create a link and click it to initiate the download
+  let link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = filename;
+  link.click();
+}
