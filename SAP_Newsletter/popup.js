@@ -13,7 +13,7 @@ scrapeLinks.addEventListener("click", async () => {
     if (results && results.length > 0 && results[0].result) {
       const jobLinks = results[0].result;
 
-      // Read the template links asynchronously
+      // Read the template links  
       readTemplateLinks((templateLinks) => {
         // Create the EML file with the job links
         const emlData = createEML(jobLinks, templateLinks);
@@ -87,7 +87,7 @@ function downloadFile(data, filename) {
   URL.revokeObjectURL(url);
 }
 
-/!-------------------------------------------------------------------
+//!-------------------------------------------------------------------
 
 // Function to create a PDF file with the job links, titles, and categories
 function createPDF(jobLinks, jobTitles, jobLocations) {
