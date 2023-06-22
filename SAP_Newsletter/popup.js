@@ -25,8 +25,12 @@ scrapeLinks.addEventListener("click", async () => {
 // Function to scrape links, titles, and categories from the web page
 function scrapeLinksFromPage() {
   const linkRegEx = /href="(\/job\/[\w-]+\/\d+\/)"/g;
-  const jobTitleElements = document.querySelectorAll('.colTitle');
-  const jobCategoryElements = document.querySelectorAll('.colLocation');
+  const jobTitleElements = document.querySelectorAll('a.jobTitle-link');
+  const jobCategoryElements = document.querySelectorAll('span.jobLocation');
+
+  console.log('Job Title Elements:', jobTitleElements);
+  console.log('Job Category Elements:', jobCategoryElements);
+
   const links = Array.from(document.body.innerHTML.matchAll(linkRegEx)).map(match => `${match[1]}`);
   const jobTitles = Array.from(jobTitleElements).map(element => element.innerText);
   const jobLocations = Array.from(jobCategoryElements).map(element => element.innerText);
