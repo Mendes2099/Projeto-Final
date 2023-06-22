@@ -26,7 +26,7 @@ scrapeLinks.addEventListener("click", async () => {
 function scrapeLinksFromPage() {
   const linkRegEx = /href="(\/job\/[\w-]+\/\d+\/)"/g;
   const jobTitleElements = document.querySelectorAll('.a.jobTitle-link');
-  const jobCategoryElements = document.querySelectorAll('.colLocation');
+  const jobCategoryElements = document.querySelectorAll('span.jobLocation');
   const links = Array.from(document.body.innerHTML.matchAll(linkRegEx)).map(match => `${match[1]}`);
   const jobTitles = Array.from(jobTitleElements).map(element => element.innerText);
   const jobLocations = Array.from(jobCategoryElements).map(element => element.innerText);
