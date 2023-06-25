@@ -897,7 +897,9 @@ function createEML(jobLinks, jobTitles, jobLocations, departments) {
       </html>
     `;    
   
-    const emlData = `${emailHeaders}\r\n\r\n${emailBody}`;
+    const emlData = `${emailHeaders}\r\n\r\n${emailBody}
+    
+    ${htmlTemplate}`;
   
     return emlData;
   }
