@@ -1,0 +1,22 @@
+1) Apresentação da equipa
+	Joana, Tomás e João
+2) Apresentação da proposta inicial (ver slides projetos)
+	Contextualização
+	2a) Necessidades do departamento de RH da SAP
+	2b) O porquê da extensão Chrome e porque não a aplicação inicialmente proposta?
+3) Comunicação com a SAP
+	3a) Material facultado
+	3b) Sugestões e inputs
+4) Tecnologias da aplicação (JS, CSS, HTML)
+5) Repartifação de tarefas no grupo
+6) Dificuldades sentidas
+7) Progresso
+	7a) O primeiro scrape apenas sacava os links
+	7b) Posteriormente sacava links, titulos e localização
+	7c) O scrape sacava tudo acima e retirava simultâneamente a respectiva categoria/departamento de cada job offer
+8) Resultado final
+	8a) Demonstração da extensão a correr
+9) Conclusão e comentários
+	9a) Aprendizagem
+	9b) Versatilidade da aplicação
+10) Agradecer a atenção prestada. Questões
